@@ -2,7 +2,7 @@ package routers
 
 import (
 	"net/http"
-	config "server/config"
+	"server/config"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -40,6 +40,20 @@ func InitRouter() *gin.Engine {
 
 		// DELETE /tasks/:id
 		task.DELETE("/:id", DeleteTask)
+	}
+
+	todo := apiGroups.Group("/todos")
+	{
+		// GET /api/todos
+		todo.GET("", GetTodos)
+		// POST /api/todos
+		todo.POST("", AddTodo)
+		// UPDATE /api/todos/:id
+		todo.PUT("/:id", UpdateTodo)
+		// DELETE /api/todos/:id
+		todo.DELETE("/:id", DeleteTodo)
+		// GET /api/todos/:id
+		todo.GET("/:id", GetTodo)
 	}
 
 	PORT := env.PORT

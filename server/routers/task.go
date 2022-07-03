@@ -22,16 +22,16 @@ type AddTaskForm struct {
 // @Success 200
 // @Failure 400
 // @Router /api/tasks/ [post]
-func AddTask(c *gin.Context) {
+func AddTask(ctx *gin.Context) {
 	// pass context to controller
-	appG := app.Gin{C: c}
+	appG := app.Gin{C: ctx}
 
 	var form *AddTaskForm
 
-	err := c.ShouldBindJSON(&form)
+	err := ctx.ShouldBindJSON(&form)
 
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
+		ctx.JSON(http.StatusBadRequest, gin.H{
 			"success": false,
 			"message": "Error:" + err.Error(),
 		})
@@ -47,7 +47,7 @@ func AddTask(c *gin.Context) {
 	task, err := todoService.Add()
 
 	if err != nil {
-		appG.Response(http.StatusBadRequest, e.ADD_TODO_FAIL, nil)
+		appG.Response(http.StatusBadRequest, e.ERROR_ADD_TODO_FAIL, nil)
 		return
 	}
 
