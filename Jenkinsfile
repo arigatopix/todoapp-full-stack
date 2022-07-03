@@ -44,7 +44,7 @@ pipeline {
     stage('copy docker-compose to production') {
       steps {
         sshagent([prodCredentials]) {
-          sh 'ssh -o StrictHostKeyChecking=no ' + server + ' mkdir -p app/todo'
+          sh 'ssh -o StrictHostKeyChecking=no ' + server + ' mkdir -p app/todoapp'
           sh 'ssh -o StrictHostKeyChecking=no ' + server + ' sudo docker compose -f /home/ubuntu/app/todoapp/docker-compose.yml down'
           sh 'scp -o StrictHostKeyChecking=no docker-compose.yml ' + server + ':/home/ubuntu/app/todoapp/docker-compose.yml'
           sh 'ssh -o StrictHostKeyChecking=no ' + server + ' sudo docker compose -f /home/ubuntu/app/todoapp/docker-compose.yml pull'
