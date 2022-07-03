@@ -39,7 +39,7 @@ services:
     image: arigatopix/todoapp-nginx:latest
     container_name: todo-nginx-container
     ports:
-      - '3050:80'
+      - '80:80'
     networks:
       - todo-network
 volumes:
