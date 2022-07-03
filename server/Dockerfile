@@ -4,17 +4,18 @@ WORKDIR /app
 
 COPY ./server/go.mod ./
 COPY ./server/go.sum ./
+
 RUN go mod download
 
 COPY ./server/ ./
 
-RUN go build -o /server
+RUN go build -o server
 
 FROM gcr.io/distroless/base-debian10
 
-WORKDIR /
+WORKDIR /app
 
-COPY --from=build /server /server
+COPY --from=build /app/server ./
+COPY --from=build /app/.env ./
 
-
-ENTRYPOINT ["/server"]
+CMD ["/app/server"]
