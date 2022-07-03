@@ -8,10 +8,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BindAndValid(c *gin.Context, form interface{}) (int, int) {
-	err := c.Bind(form)
+func BindAndValid(ctx *gin.Context, form interface{}) (int, int) {
+	err := ctx.ShouldBindJSON(form)
 	if err != nil {
-		return 200, 400
+		return http.StatusBadRequest, e.INVALID_PARAMS
 	}
 
 	return http.StatusOK, e.SUCCESS
