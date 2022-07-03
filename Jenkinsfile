@@ -35,9 +35,9 @@ pipeline {
 
     stage('build images latest') {
       steps {
-        sh 'docker buildx build --push -t ' + serverRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f server/Dockerfile .'
-        sh 'docker buildx build --push -t ' + frontendRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f frontend/Dockerfile .'
-        sh 'docker buildx build --push -t ' + nginxRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f nginx/Dockerfile .'
+        sh 'docker buildx build --push -t ' + serverRegistry + ' --platform=linux/amd64 -f server/Dockerfile .'
+        sh 'docker buildx build --push -t ' + frontendRegistry + ' --platform=linux/amd64 -f frontend/Dockerfile .'
+        sh 'docker buildx build --push -t ' + nginxRegistry + ' --platform=linux/amd64 -f nginx/Dockerfile .'
       }
     }
 
