@@ -3,11 +3,11 @@ FROM node:16-alpine as build
 
 WORKDIR /app
 
-COPY package*.json .
+COPY ./frontend/package*.json ./
 
 RUN npm install
 
-COPY .  .
+COPY ./frontend  ./
 
 RUN npm run build
 
@@ -17,6 +17,6 @@ EXPOSE 4200
 
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY ./frontend/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 COPY --from=build /app/dist/code /usr/share/nginx/html
