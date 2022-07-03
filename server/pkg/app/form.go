@@ -3,7 +3,7 @@ package app
 import (
 	"net/http"
 
-	e "server/pkg/e"
+	"server/pkg/e"
 
 	"github.com/gin-gonic/gin"
 )

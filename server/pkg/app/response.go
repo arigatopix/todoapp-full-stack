@@ -1,7 +1,7 @@
 package app
 
 import (
-	e "server/pkg/e"
+	"server/pkg/e"
 
 	"github.com/gin-gonic/gin"
 )
