@@ -1,0 +1,52 @@
+version: '3.9'
+services:
+  postgresdb:
+    image: postgres:14.4-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - ./server/.env
+    ports:
+      - 54321:5432
+    networks:
+      - todo-network
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+      target: dev
+    depends_on:
+      - postgresdb
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./server/.env
+    networks:
+      - todo-network
+  frontend:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    networks:
+      - todo-network
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    depends_on:
+      - postgresdb
+      - server
+      - frontend
+    restart: always
+    ports:
+      - '3050:80'
+    networks:
+      - todo-network
+volumes:
+  db-data:
+networks:
+  todo-network:

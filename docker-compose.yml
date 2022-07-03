@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  postgresdb:
+    image: postgres:14.4-alpine
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    env_file:
+      - ./server/.env
+    ports:
+      - 54321:5432
+    networks:
+      - todo-network
+  server:
+    image: arigatopix/todoapp-server:latest
+    container_name: todo-server-container
+    depends_on:
+      - postgresdb
+    volumes:
+      - ./server:/app
+    env_file:
+      - ./server/.env
+    networks:
+      - todo-network
+  frontend:
+    image: arigatopix/todoapp-frontend:latest
+    container_name: todoapp-frontend-container
+    networks:
+      - todo-network
+  nginx:
+    depends_on:
+      - server
+      - frontend
+      - postgresdb
+    restart: always
+    image: arigatopix/todoapp-nginx:latest
+    container_name: todo-nginx-container
+    ports:
+      - '3050:80'
+    networks:
+      - todo-network
+volumes:
+  db-data:
+networks:
+  todo-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: '192.168.4.0/24'
