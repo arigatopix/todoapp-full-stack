@@ -26,13 +26,6 @@ pipeline {
       }
     }
 
-    stage('build images latest') {
-      steps {
-        sh 'docker build -t ' + serverRegistry + ' -f server/Dockerfile .'
-        sh 'docker build -t ' + frontendRegistry + ' -f frontend/Dockerfile .'
-        sh 'docker build -t ' + nginxRegistry + ' -f nginx/Dockerfile .'
-      }
-    }
 
     stage('login dockerhub') {
       steps {
@@ -40,12 +33,12 @@ pipeline {
       }
     }  
 
-    stage('push to docker hub') {
+    stage('build images latest') {
       steps {
-				sh 'docker push ' + serverRegistry
-				sh 'docker push ' + frontendRegistry
-				sh 'docker push ' + nginxRegistry
-			}
+        sh 'docker buildx build --push -t ' + serverRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f server/Dockerfile .'
+        sh 'docker buildx build --push -t ' + frontendRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f frontend/Dockerfile .'
+        sh 'docker buildx build --push -t ' + nginxRegistry + ' type=image --platform=linux/arm64,linux/amd64 -f nginx/Dockerfile .'
+      }
     }
 
     stage('copy docker-compose to production') {
