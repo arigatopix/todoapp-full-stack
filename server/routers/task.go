@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strconv"
 
-	"server/pkg/app"
-	"server/pkg/e"
+	app "server/pkg/app"
+	e "server/pkg/e"
 	s "server/services"
 
 	"github.com/gin-gonic/gin"
