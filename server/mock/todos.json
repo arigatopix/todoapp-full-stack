@@ -1,25 +1,25 @@
 [
   {
     "id": 1,
-    "name": "Do some yoga",
+    "title": "Do some yoga",
     "completed": true,
     "userId": 1
   },
   {
     "id": 2,
-    "name": "Practice meditation",
+    "title": "Practice meditation",
     "completed": false,
     "userId": 1
   },
   {
     "id": 3,
-    "name": "Download a leadership and/or business audiobook",
+    "title": "Download a leadership and/or business audiobook",
     "completed": true,
     "userId": 2
   },
   {
     "id": 4,
-    "name": "Coding",
+    "title": "Coding",
     "completed": true,
     "userId": 2
   }
