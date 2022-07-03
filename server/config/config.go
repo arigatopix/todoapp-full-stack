@@ -17,12 +17,13 @@ type env struct {
 }
 
 func LoadENV() env {
+	if os.Getenv("GO_ENV") != "production" {
+		// load .env file
+		err := godotenv.Load(".env")
 
-	// load .env file
-	err := godotenv.Load(".env")
-
-	if err != nil {
-		log.Fatalf("Error loading .env file")
+		if err != nil {
+			log.Fatalf("Error loading .env file")
+		}
 	}
 
 	loadedEnv := env{

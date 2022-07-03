@@ -19,6 +19,8 @@ services:
       - postgresdb
     volumes:
       - ./server:/app
+    environment:
+      - GO_ENV=production
     env_file:
       - ./server/.env
     networks:
