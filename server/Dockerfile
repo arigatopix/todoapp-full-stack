@@ -2,11 +2,11 @@ FROM golang:1.18.3-buster AS build
 
 WORKDIR /app
 
-COPY go.mod .
-COPY go.sum .
+COPY ./server/go.mod ./
+COPY ./server/go.sum ./
 RUN go mod download
 
-COPY ./ ./
+COPY ./server/ ./
 
 RUN go build -o /server
 
@@ -15,5 +15,6 @@ FROM gcr.io/distroless/base-debian10
 WORKDIR /
 
 COPY --from=build /server /server
+
 
 ENTRYPOINT ["/server"]
