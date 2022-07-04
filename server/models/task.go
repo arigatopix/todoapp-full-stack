@@ -12,6 +12,7 @@ type Task struct {
 }
 
 func UpdateTask(id int, data interface{}) (*Task, error) {
+	db := ConnectDB()
 	var task Task
 
 	err := db.Model(&task).Where("ID = ?", id).Updates(data).Error
@@ -29,6 +30,7 @@ func UpdateTask(id int, data interface{}) (*Task, error) {
 }
 
 func DeleteTask(id int) error {
+	db := ConnectDB()
 	if err := db.Delete(&Task{}, id).Error; err != nil {
 		return err
 	}
@@ -37,6 +39,7 @@ func DeleteTask(id int) error {
 }
 
 func AddTask(data map[string]interface{}) (*Task, error) {
+	db := ConnectDB()
 
 	task := Task{
 		Text:     data["text"].(string),
@@ -52,6 +55,7 @@ func AddTask(data map[string]interface{}) (*Task, error) {
 }
 
 func GetTask(id int) (*Task, error) {
+	db := ConnectDB()
 	var task Task
 
 	err := db.First(&task, id).Error
@@ -65,6 +69,7 @@ func GetTask(id int) (*Task, error) {
 
 // List all Tasks
 func GetTasks() ([]*Task, error) {
+	db := ConnectDB()
 
 	var tasks []*Task
 
