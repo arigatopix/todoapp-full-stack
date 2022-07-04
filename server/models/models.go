@@ -1,27 +1,22 @@
 package models
 
 import (
-	config "server/config"
+	"server/config"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 type Model struct {
-	ID int `gorm:"primary_key" json:"id"`
-	// CreatedOn  int `json:"created_on"`
-	// ModifiedOn int `json:"modified_on"`
-	// DeletedOn  int `json:"deleted_on"`
+	ID int `gorm:"primaryKey" json:"id"`
 }
 
-var db *gorm.DB
-
-func ConnectDB() {
+func ConnectDB() *gorm.DB {
 	env := config.LoadENV()
 
-	var err error
+	dsn := "postgresql://" + env.POSTGRES_USER + ":" + env.POSTGRES_PASSWORD + "@" + env.POSTGRES_HOST + ":" + env.POSTGRES_PORT + "/" + env.POSTGRES_DB
 
-	dsn := "host=" + env.POSTGRES_HOST + " user=" + env.POSTGRES_USER + " password=" + env.POSTGRES_PASSWORD + " dbname=" + env.POSTGRES_DB + " port=" + env.POSTGRES_PORT + " sslmode=disable TimeZone=Asia/Bangkok"
+	var err error
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
@@ -29,5 +24,7 @@ func ConnectDB() {
 		panic("failed to connect database")
 	}
 
-	db.AutoMigrate(&Task{})
+	db.AutoMigrate(&Todo{})
+
+	return db
 }
