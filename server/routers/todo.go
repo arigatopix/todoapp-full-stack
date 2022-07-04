@@ -10,6 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @desc    Get all todos
+// @route   GET /api/todos
+// @access  Private
+// @Success 200
+// @Failure 400
 func GetTodos(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
@@ -30,6 +35,11 @@ type AddTodoForm struct {
 	Completed *bool  `form:"completed" json:"completed" binding:"required" validate:"boolean"`
 }
 
+// @desc    Add todo
+// @route   POST /api/todos
+// @access  Private
+// @Success 200
+// @Failure 400
 func AddTodo(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
@@ -57,6 +67,11 @@ func AddTodo(ctx *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, todo)
 }
 
+// @desc    Get single todo
+// @route   GET /api/todos/:id
+// @access  Private
+// @Success 200
+// @Failure 400
 func GetTodo(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
@@ -64,6 +79,7 @@ func GetTodo(ctx *gin.Context) {
 
 	if err != nil {
 		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
 	}
 
 	todoService := services.Todo{ID: id}
@@ -72,6 +88,7 @@ func GetTodo(ctx *gin.Context) {
 
 	if err != nil {
 		appG.Response(http.StatusBadRequest, e.ERROR_TODO_NOT_EXIST, nil)
+		return
 	}
 
 	appG.Response(http.StatusOK, e.SUCCESS, todo)
@@ -82,6 +99,11 @@ type UpdateTodoForm struct {
 	Completed *bool  `form:"completed" json:"completed" binding:"required" validate:"boolean"`
 }
 
+// @desc    Update todo
+// @route   PUT /api/todos/:id
+// @access  Private
+// @Success 200
+// @Failure 400
 func UpdateTodo(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
@@ -117,6 +139,11 @@ func UpdateTodo(ctx *gin.Context) {
 	appG.Response(http.StatusOK, e.SUCCESS, todo)
 }
 
+// @desc    DELELTE todo
+// @route   DELETE /api/todos/:id
+// @access  Private
+// @Success 200
+// @Failure 400
 func DeleteTodo(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
@@ -124,12 +151,14 @@ func DeleteTodo(ctx *gin.Context) {
 
 	if err != nil {
 		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
 	}
 
 	todoService := services.Todo{ID: id}
 
 	if err := todoService.Delete(id); err != nil {
 		appG.Response(http.StatusBadRequest, e.ERROR_DELETE_TODO_FAIL, nil)
+		return
 	}
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
