@@ -35,7 +35,7 @@ services:
       - todo-network
   nginx:
     build:
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
       context: ./nginx
     depends_on:
       - postgresdb
