@@ -24,36 +24,21 @@ func InitRouter() *gin.Engine {
 		})
 	})
 
-	task := apiGroups.Group("/tasks")
-	{
-		// GET /tasks
-		task.GET("", GetTasks)
-
-		// GET /tasks/:id
-		task.GET("/:id", GetTask)
-
-		// POST /tasks
-		task.POST("", AddTask)
-
-		// PUT /tasks/:id
-		task.PUT("/:id", UpdateTask)
-
-		// DELETE /tasks/:id
-		task.DELETE("/:id", DeleteTask)
-	}
-
+	// Route /api/todos
 	todo := apiGroups.Group("/todos")
 	{
-		// GET /api/todos
 		todo.GET("", GetTodos)
-		// POST /api/todos
 		todo.POST("", AddTodo)
-		// UPDATE /api/todos/:id
 		todo.PUT("/:id", UpdateTodo)
-		// DELETE /api/todos/:id
 		todo.DELETE("/:id", DeleteTodo)
-		// GET /api/todos/:id
 		todo.GET("/:id", GetTodo)
+	}
+
+	// Route /api/auth
+	auth := apiGroups.Group("/auth")
+	{
+		auth.GET("/me", GetMe)
+		auth.POST("/register", Register)
 	}
 
 	PORT := env.PORT
