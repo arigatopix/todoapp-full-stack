@@ -12,6 +12,11 @@ var MessageFlags = map[int]string{
 
 	ERROR_REGISTER_USER:  "Can not register user with email",
 	ERROR_USER_NOT_EXIST: "User does not exist",
+
+	ERROR_USER_EXISTED:             "Email used. Please enter new email or log in instaed",
+	ERROR_AUTH_TOKEN:               "Can not generate token",
+	ERROR_AUTH_CHECK_TOKEN_TIMEOUT: "Please login again",
+	ERROR_AUTH_CHECK_TOKEN_FAIL:    "Token does not match unauthorized",
 }
 
 func GetMessage(errCode int) string {

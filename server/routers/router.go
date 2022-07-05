@@ -3,6 +3,7 @@ package routers
 import (
 	"net/http"
 	"server/config"
+	"server/middlewares"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -37,7 +38,7 @@ func InitRouter() *gin.Engine {
 	// Route /api/auth
 	auth := apiGroups.Group("/auth")
 	{
-		auth.GET("/me", GetMe)
+		auth.GET("/me", middlewares.Protect(), GetMe)
 		auth.POST("/register", Register)
 	}
 

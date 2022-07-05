@@ -7,6 +7,23 @@ type User struct {
 	Email string `json:"email"`
 }
 
+func ExistEmail(email string) (bool, error) {
+	db := ConnectDB()
+
+	var user User
+
+	// หา email
+	if err := db.Where(User{Email: email}).First(&user).Error; err != nil {
+		return false, err
+	}
+
+	if user.ID > 0 {
+		return true, nil
+	}
+
+	return false, nil
+}
+
 func AddUser(data map[string]interface{}) (*User, error) {
 	db := ConnectDB()
 
