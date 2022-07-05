@@ -2,9 +2,23 @@ package e
 
 // รับ SUCCESS จาก code.go
 var MessageFlags = map[int]string{
-	SUCCESS:       "ok",
-	ERROR:         "fail",
-	ADD_TODO_FAIL: "Can not add todos",
+	SUCCESS:                         "ok",
+	ERROR:                           "fail",
+	INVALID_PARAMS:                  "Invalid field or value",
+	ERROR_ADD_TODO_FAIL:             "Can not add todos",
+	ERROR_UPDATE_TODO:               "Fail to update todo",
+	ERROR_TODO_NOT_EXIST:            "Todo does not exist",
+	ERROR_DELETE_TODO_FAIL:          "Delete todo fail",
+	ERROR_USER_DOES_NOT_BELONG_TODO: "Todo does not belong to user id",
+
+	ERROR_REGISTER_USER:  "Can not register user with email",
+	ERROR_USER_NOT_EXIST: "User does not exist",
+
+	ERROR_USER_EXISTED:             "Email used. Please enter new email or log in instaed",
+	ERROR_AUTH_TOKEN:               "Can not generate token",
+	ERROR_AUTH_CHECK_TOKEN_TIMEOUT: "Please login again",
+	ERROR_AUTH_CHECK_TOKEN_FAIL:    "Token does not match unauthorized",
+	ERROR_UNAUTHORIZED:             "Unauthorized",
 }
 
 func GetMessage(errCode int) string {

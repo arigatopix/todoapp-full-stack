@@ -14,7 +14,7 @@ import (
 
 type Todo struct {
 	ID        int64  `json:"id"`
-	Name      string `json:"name"`
+	Title     string `json:"title"`
 	UserId    int    `json:"userId"`
 	Completed bool   `json:"completed"`
 }
