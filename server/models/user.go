@@ -50,3 +50,16 @@ func GetUser(id int) (*User, error) {
 
 	return &user, nil
 }
+
+func GetUserByEmail(email string) (*User, error) {
+	db := ConnectDB()
+	var user User
+
+	err := db.Where("email = ?", email).First(&user).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}

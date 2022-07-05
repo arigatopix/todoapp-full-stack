@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"server/models"
 	"server/pkg/app"
 	"server/pkg/e"
 	"server/pkg/utils"
@@ -15,8 +16,36 @@ type UserRegisterForm struct {
 	Email string `form:"email" json:"email" binding:"required,email"`
 }
 
+type ResponseUser struct {
+	ID    int
+	Email string
+}
+
+type UserLogin struct {
+	Email string `json:"email"`
+	// TODO password string `json:"password"`
+}
+
+func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
+
+	token, err := utils.GenerateToken(user.ID)
+
+	if err != nil {
+		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+		return
+	}
+
+	resData := map[string]string{
+		"token": token,
+		"email": user.Email,
+	}
+
+	appG.Response(httpCode, e.SUCCESS, resData)
+}
+
 // @desc    Register new user
 // @route   POST /api/auth/register
+// @payload {email, password}
 // @access  Public
 // @Success 200
 // @Failure 400
@@ -51,19 +80,21 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateToken(user.ID)
+	sendTokenResponse(http.StatusOK, user, appG)
 
-	if err != nil {
-		appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
-		return
-	}
+	// token, err := utils.GenerateToken(user.ID)
 
-	resData := map[string]string{
-		"token": token,
-		"email": user.Email,
-	}
+	// if err != nil {
+	// 	appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
+	// 	return
+	// }
 
-	appG.Response(http.StatusOK, e.SUCCESS, resData)
+	// resData := map[string]string{
+	// 	"token": token,
+	// 	"email": user.Email,
+	// }
+
+	// appG.Response(http.StatusOK, e.SUCCESS, resData)
 }
 
 // @desc    Get information user
@@ -90,4 +121,36 @@ func GetMe(ctx *gin.Context) {
 	}
 
 	appG.Response(http.StatusOK, e.SUCCESS, user)
+}
+
+// @desc    Login
+// @route   GET /api/auth/login
+// @payload {email, password}
+// @access  Public
+// @Success 200
+// @Failure 400
+func Login(ctx *gin.Context) {
+	appG := app.Gin{C: ctx}
+
+	var form UserLogin
+
+	httpCode, errCode := app.BindAndValid(ctx, &form)
+
+	if errCode != e.SUCCESS {
+		appG.Response(httpCode, errCode, nil)
+		return
+	}
+
+	authService := services.User{
+		Email: form.Email,
+	}
+
+	user, err := authService.Login()
+
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.ERROR_USER_NOT_EXIST, nil)
+		return
+	}
+
+	sendTokenResponse(http.StatusOK, user, appG)
 }

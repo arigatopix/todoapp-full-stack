@@ -38,8 +38,9 @@ func InitRouter() *gin.Engine {
 	// Route /api/auth
 	auth := apiGroups.Group("/auth")
 	{
-		auth.GET("/me", middlewares.Protect(), GetMe)
 		auth.POST("/register", Register)
+		auth.POST("/login", Login)
+		auth.GET("/me", middlewares.Protect(), GetMe)
 	}
 
 	PORT := env.PORT

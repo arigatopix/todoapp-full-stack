@@ -27,3 +27,14 @@ func (u *User) Add() (*models.User, error) {
 
 	return created, nil
 }
+
+func (u *User) Login() (*models.User, error) {
+
+	user, err := models.GetUserByEmail(u.Email)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return user, nil
+}
