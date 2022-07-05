@@ -17,6 +17,7 @@ var MessageFlags = map[int]string{
 	ERROR_AUTH_TOKEN:               "Can not generate token",
 	ERROR_AUTH_CHECK_TOKEN_TIMEOUT: "Please login again",
 	ERROR_AUTH_CHECK_TOKEN_FAIL:    "Token does not match unauthorized",
+	ERROR_UNAUTHORIZED:             "Unauthorized",
 }
 
 func GetMessage(errCode int) string {

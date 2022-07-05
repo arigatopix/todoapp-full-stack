@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"fmt"
+	"net/http"
 	"server/pkg/e"
 	"server/pkg/utils"
 	"strconv"
@@ -22,7 +22,7 @@ func Protect() gin.HandlerFunc {
 		token := strings.TrimPrefix(s, "Bearer ")
 
 		if s == "" || token == "" {
-			code = e.INVALID_PARAMS
+			code = e.ERROR_UNAUTHORIZED
 		}
 
 		decoded, err := utils.ParseToken(token)
@@ -37,16 +37,15 @@ func Protect() gin.HandlerFunc {
 		}
 
 		if code != e.SUCCESS {
-			ctx.JSON(code, gin.H{
+			ctx.JSON(http.StatusUnauthorized, gin.H{
 				"code":    code,
 				"message": e.GetMessage(code),
 				"data":    nil,
 			})
 
 			ctx.Abort()
+			return
 		}
-
-		fmt.Println(decoded.UserId)
 
 		ctx.Set("userId", strconv.Itoa(decoded.UserId))
 
