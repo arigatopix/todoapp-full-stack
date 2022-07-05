@@ -14,6 +14,7 @@ import (
 
 type UserRegisterForm struct {
 	Email string `form:"email" json:"email" binding:"required,email"`
+	// TODO password string `form:"password" json:"password" binding:"required,min=3"`
 }
 
 type ResponseUser struct {
@@ -22,8 +23,8 @@ type ResponseUser struct {
 }
 
 type UserLogin struct {
-	Email string `json:"email"`
-	// TODO password string `json:"password"`
+	Email string `form:"email" json:"email" binding:"required,email"`
+	// TODO password string `form:"password" json:"password" binding:"required,min=3"`
 }
 
 func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
