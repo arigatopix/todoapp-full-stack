@@ -26,7 +26,7 @@ func InitRouter() *gin.Engine {
 	})
 
 	// Route /api/todos
-	todo := apiGroups.Group("/todos")
+	todo := apiGroups.Group("/todos", middlewares.Protect())
 	{
 		todo.GET("", GetTodos)
 		todo.POST("", AddTodo)

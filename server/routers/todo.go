@@ -18,7 +18,14 @@ import (
 func GetTodos(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
-	todoService := services.Todo{}
+	userId, err := strconv.Atoi(ctx.GetString("userId"))
+
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	todoService := services.Todo{UserId: userId}
 
 	todos, err := todoService.GetAll()
 
@@ -52,9 +59,17 @@ func AddTodo(ctx *gin.Context) {
 		return
 	}
 
+	userId, err := strconv.Atoi(ctx.GetString("userId"))
+
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
 	todoService := services.Todo{
 		Title:     form.Title,
 		Completed: *form.Completed,
+		UserId:    userId,
 	}
 
 	todo, err := todoService.Add()
@@ -82,9 +97,16 @@ func GetTodo(ctx *gin.Context) {
 		return
 	}
 
-	todoService := services.Todo{ID: id}
+	userId, err := strconv.Atoi(ctx.GetString("userId"))
 
-	todo, err := todoService.Get(id)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
+	todoService := services.Todo{ID: id, UserId: userId}
+
+	todo, err := todoService.Get()
 
 	if err != nil {
 		appG.Response(http.StatusBadRequest, e.ERROR_TODO_NOT_EXIST, nil)
@@ -123,10 +145,18 @@ func UpdateTodo(ctx *gin.Context) {
 		return
 	}
 
+	userId, err := strconv.Atoi(ctx.GetString("userId"))
+
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
+		return
+	}
+
 	todoService := services.Todo{
 		ID:        id,
 		Title:     form.Title,
 		Completed: *form.Completed,
+		UserId:    userId,
 	}
 
 	todo, err := todoService.Update(id)
@@ -154,12 +184,22 @@ func DeleteTodo(ctx *gin.Context) {
 		return
 	}
 
-	todoService := services.Todo{ID: id}
+	userId, err := strconv.Atoi(ctx.GetString("userId"))
 
-	if err := todoService.Delete(id); err != nil {
-		appG.Response(http.StatusBadRequest, e.ERROR_DELETE_TODO_FAIL, nil)
+	if err != nil {
+		appG.Response(http.StatusBadRequest, e.INVALID_PARAMS, nil)
 		return
 	}
+
+	todoService := services.Todo{ID: id, UserId: userId}
+
+	// Find todo with userId
+	if _, err := todoService.Get(); err != nil {
+		appG.Response(http.StatusBadRequest, e.ERROR_USER_DOES_NOT_BELONG_TODO, nil)
+		return
+	}
+
+	todoService.Delete()
 
 	appG.Response(http.StatusOK, e.SUCCESS, nil)
 }
