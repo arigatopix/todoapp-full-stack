@@ -17,11 +17,18 @@ func Protect() gin.HandlerFunc {
 
 		code = e.SUCCESS
 
+		var token string
+
+		cookie, _ := ctx.Cookie("token")
 		s := ctx.Request.Header.Get("Authorization")
 
-		token := strings.TrimPrefix(s, "Bearer ")
+		if s != "" {
+			token = strings.TrimPrefix(s, "Bearer ")
+		} else if cookie != "" {
+			token = cookie
+		}
 
-		if s == "" || token == "" {
+		if token == "" {
 			code = e.ERROR_UNAUTHORIZED
 		}
 

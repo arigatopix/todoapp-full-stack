@@ -36,6 +36,9 @@ func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
 		return
 	}
 
+	// set cookie for browser
+	appG.C.SetCookie("token", token, 60*60*5, "/", "", false, true)
+
 	resData := map[string]string{
 		"token": token,
 		"email": user.Email,
@@ -82,20 +85,6 @@ func Register(ctx *gin.Context) {
 	}
 
 	sendTokenResponse(http.StatusOK, user, appG)
-
-	// token, err := utils.GenerateToken(user.ID)
-
-	// if err != nil {
-	// 	appG.Response(http.StatusInternalServerError, e.ERROR_AUTH_TOKEN, nil)
-	// 	return
-	// }
-
-	// resData := map[string]string{
-	// 	"token": token,
-	// 	"email": user.Email,
-	// }
-
-	// appG.Response(http.StatusOK, e.SUCCESS, resData)
 }
 
 // @desc    Get information user

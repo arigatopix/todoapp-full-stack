@@ -4,7 +4,7 @@ import "gorm.io/gorm"
 
 type User struct {
 	Model
-	Email string `json:"email"`
+	Email string `gorm:"index:unique" json:"email"`
 }
 
 func ExistEmail(email string) (bool, error) {
