@@ -144,3 +144,18 @@ func Login(ctx *gin.Context) {
 
 	sendTokenResponse(http.StatusOK, user, appG)
 }
+
+// @desc    Logout
+// @route   GET /api/auth/logout
+// @access  Private
+// @Success 200
+// @Failure 400
+func Logout(ctx *gin.Context) {
+	appG := app.Gin{C: ctx}
+
+	appG.C.SetCookie("token", "", 0, "", "", false, true)
+
+	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
+		"token": "",
+	})
+}
