@@ -1,6 +1,6 @@
-<form>
+<form [formGroup]="todoFormGroup">
   <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="New Todo" />
-    <button class="btn btn-primary" type="button">Add Todo</button>
+    <input type="text" class="form-control" placeholder="New Todo" formControlName="title" />
+    <button class="btn btn-primary" (click)="onClick()">Add Todo</button>
   </div>
 </form>
