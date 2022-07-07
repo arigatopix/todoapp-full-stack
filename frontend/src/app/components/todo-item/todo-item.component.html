@@ -11,8 +11,7 @@
       />
       <span class="mx-3">{{ todo.title }}</span>
     </div>
-
-    <fa-icon [icon]="faTimes" [ngStyle]="{'color': 'red'}"></fa-icon>
+    <fa-icon (click)="onDeleteHandler(todo)" [icon]="faTimes" [ngStyle]="{'color': 'red'}"></fa-icon>
     </div>
   </li>
   

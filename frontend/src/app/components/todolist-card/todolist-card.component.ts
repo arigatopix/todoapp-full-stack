@@ -16,4 +16,11 @@ export class TodolistCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  createTodo(todo: Todo) {
+    todos.push(todo)
+  }
+
+  deleteTodo(todo: Todo) {
+    return this.todos = this.todos.filter(td => td.id !== todo.id)
+  }
 }
