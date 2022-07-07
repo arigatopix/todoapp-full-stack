@@ -1,7 +1,0 @@
-
-{
-  "/api": {
-    "target": "http://server:5001",
-    "secure": false
-  }
-}
