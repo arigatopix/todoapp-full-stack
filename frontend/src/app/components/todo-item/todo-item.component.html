@@ -7,8 +7,9 @@
         [value]="todo.id"
         (change)="onCheckboxChange(todo)"
         id="flexCheckDefault"
+        [attr.checked]="todo.completed ? '' : null"
       />
-      <span [ngClass]="{ compleated: todo.compleated }" class="mx-3">{{
+      <span [ngClass]="{ completed: todo.completed }" class="mx-3">{{
         todo.title
       }}</span>
     </div>
