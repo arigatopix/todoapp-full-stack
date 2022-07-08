@@ -23,7 +23,7 @@ export class AddTodoComponent implements OnInit {
     if (this.todoFormGroup.get('title')?.value) {
       this.addTodoHandler.emit({
         title: this.todoFormGroup.get('title')?.value,
-        compleated: true,
+        completed: false,
       });
 
       this.todoFormGroup.reset();

@@ -1,19 +1,19 @@
-import { Todo } from './interfaces/Todo'
+import { Todo } from './interfaces/Todo';
 
 export const todos: Todo[] = [
   {
     id: 1,
-    title: "work out",
-    compleated: false,
+    title: 'work out',
+    completed: false,
   },
   {
     id: 2,
-    title: "walk with dog",
-    compleated: true,
+    title: 'walk with dog',
+    completed: true,
   },
   {
     id: 3,
-    title: "some work",
-    compleated: false,
+    title: 'some work',
+    completed: false,
   },
-]
+];
