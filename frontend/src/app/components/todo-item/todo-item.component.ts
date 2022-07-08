@@ -9,6 +9,7 @@ import { Todo } from '../../interfaces/Todo';
 })
 export class TodoItemComponent implements OnInit {
   @Output() onDeleteTodo: EventEmitter<Todo> = new EventEmitter();
+  @Output() onToggleHandler: EventEmitter<Todo> = new EventEmitter();
   @Input() todo!: Todo;
 
   faTimes = faTimes;
@@ -18,5 +19,9 @@ export class TodoItemComponent implements OnInit {
 
   onDeleteHandler(todo: Todo) {
     this.onDeleteTodo.emit(todo);
+  }
+
+  onCheckboxChange(todo: Todo) {
+    this.onToggleHandler.emit(todo);
   }
 }

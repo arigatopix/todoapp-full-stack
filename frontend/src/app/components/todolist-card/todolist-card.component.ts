@@ -25,8 +25,14 @@ export class TodolistCardComponent implements OnInit {
   }
 
   deleteTodo(todo: Todo) {
-    this.todoService.delete(todo).subscribe((todos) => {
-      return (this.todos = todos);
-    });
+    return this.todoService
+      .delete(todo)
+      .subscribe((todos) => (this.todos = todos));
+  }
+
+  toggle(todo: Todo) {
+    todo.compleated = !todo.compleated;
+
+    this.todoService.toggle(todo).subscribe();
   }
 }

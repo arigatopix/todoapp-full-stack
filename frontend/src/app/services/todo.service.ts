@@ -26,4 +26,8 @@ export class TodoService {
   delete(td: Todo): Observable<Todo[]> {
     return of((this.todos = this.todos.filter((todo) => todo.id != td.id)));
   }
+
+  toggle(td: Todo): Observable<Todo> {
+    return of(td);
+  }
 }

@@ -4,10 +4,13 @@
       <input
         class="form-check-input"
         type="checkbox"
-        value=""
+        [value]="todo.id"
+        (change)="onCheckboxChange(todo)"
         id="flexCheckDefault"
       />
-      <span class="mx-3">{{ todo.title }}</span>
+      <span [ngClass]="{ compleated: todo.compleated }" class="mx-3">{{
+        todo.title
+      }}</span>
     </div>
     <fa-icon
       (click)="onDeleteHandler(todo)"
