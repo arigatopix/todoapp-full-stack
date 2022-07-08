@@ -8,9 +8,8 @@ describe('TodolistCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TodolistCardComponent ]
-    })
-    .compileComponents();
+      declarations: [TodolistCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TodolistCardComponent);
     component = fixture.componentInstance;

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import  { Todo } from '../../interfaces/Todo'
+import { Todo } from '../../interfaces/Todo';
 
 @Component({
   selector: 'app-todo-item',
@@ -8,8 +8,7 @@ import  { Todo } from '../../interfaces/Todo'
   styleUrls: ['./todo-item.component.css'],
 })
 export class TodoItemComponent implements OnInit {
-
-  @Output() onDeleteTodo: EventEmitter<Todo> = new EventEmitter()
+  @Output() onDeleteTodo: EventEmitter<Todo> = new EventEmitter();
   @Input() todo!: Todo;
 
   faTimes = faTimes;
@@ -18,6 +17,6 @@ export class TodoItemComponent implements OnInit {
   ngOnInit(): void {}
 
   onDeleteHandler(todo: Todo) {
-    this.onDeleteTodo.emit(todo)
+    this.onDeleteTodo.emit(todo);
   }
 }

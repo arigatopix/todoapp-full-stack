@@ -1,8 +1,6 @@
-  <li 
-    class="list-group-item list-group-item-action"
-  >
-    <div class="d-flex justify-content-between">
-      <div>
+<li class="list-group-item list-group-item-action">
+  <div class="d-flex justify-content-between">
+    <div>
       <input
         class="form-check-input"
         type="checkbox"
@@ -11,9 +9,10 @@
       />
       <span class="mx-3">{{ todo.title }}</span>
     </div>
-    <fa-icon (click)="onDeleteHandler(todo)" [icon]="faTimes" [ngStyle]="{'color': 'red'}"></fa-icon>
-    </div>
-  </li>
-  
-
-
+    <fa-icon
+      (click)="onDeleteHandler(todo)"
+      [icon]="faTimes"
+      [ngStyle]="{ color: 'red' }"
+    ></fa-icon>
+  </div>
+</li>
