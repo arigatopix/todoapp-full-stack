@@ -1,6 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { Todo } from '../../interfaces/Todo'
+import { Todo } from '../../interfaces/Todo';
 
 @Component({
   selector: 'app-add-todo',
@@ -8,26 +8,25 @@ import { Todo } from '../../interfaces/Todo'
   styleUrls: ['./add-todo.component.css'],
 })
 export class AddTodoComponent implements OnInit {
+  @Output() addTodoHandler = new EventEmitter();
 
-  @Output() addTodoHandler = new EventEmitter()
- 
   todoFormGroup = new FormGroup({
     id: new FormControl(),
     title: new FormControl(),
     completed: new FormControl(),
-  })
+  });
   constructor() {}
 
   ngOnInit(): void {}
 
   onClick(): void {
-    if (this.todoFormGroup.get("title")?.value) {
+    if (this.todoFormGroup.get('title')?.value) {
       this.addTodoHandler.emit({
-        title: this.todoFormGroup.get("title")?.value,
+        title: this.todoFormGroup.get('title')?.value,
         completed: false,
-      })
-  
-      this.todoFormGroup.reset()
+      });
+
+      this.todoFormGroup.reset();
     }
   }
 }
