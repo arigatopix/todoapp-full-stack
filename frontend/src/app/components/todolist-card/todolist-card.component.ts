@@ -10,6 +10,8 @@ import { Todo } from '../../interfaces/Todo';
 export class TodolistCardComponent implements OnInit {
   todos: Todo[] = [];
 
+  message: string = '';
+
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
@@ -19,8 +21,9 @@ export class TodolistCardComponent implements OnInit {
   }
 
   createTodo(todo: Todo) {
-    return this.todoService.create(todo).subscribe((todo) => {
-      this.todos.push(todo);
+    this.todoService.create(todo).subscribe({
+      next: (res) => this.todos.push(res.data),
+      error: (err) => (this.message = err.message),
     });
   }
 

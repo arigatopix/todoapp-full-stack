@@ -33,14 +33,8 @@ export class TodoService {
     return this.http.get<TodosResponse>('/api/todos', httpOptions);
   }
 
-  create(td: Todo): Observable<Todo> {
-    const newId = this.todos.length + 1;
-    const todo: Todo = {
-      id: newId,
-      title: td.title,
-      completed: td.completed,
-    };
-    return of(todo);
+  create(td: Todo): Observable<TodoResponse> {
+    return this.http.post<TodoResponse>(`/api/todos`, td, httpOptions);
   }
 
   delete(td: Todo): Observable<Todo[]> {
@@ -48,7 +42,6 @@ export class TodoService {
   }
 
   toggle(td: Todo): Observable<TodoResponse> {
-    console.log(td);
     return this.http.put<TodoResponse>(`/api/todos/${td.id}`, td, httpOptions);
   }
 }
