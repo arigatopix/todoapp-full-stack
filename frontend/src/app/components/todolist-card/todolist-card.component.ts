@@ -1,26 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import  { Todo } from '../../interfaces/Todo'
-import { todos } from '../../mock-todo'
+import { TodoService } from 'src/app/services/todo.service';
+import { Todo } from '../../interfaces/Todo';
 
 @Component({
   selector: 'app-todolist-card',
   templateUrl: './todolist-card.component.html',
-  styleUrls: ['./todolist-card.component.css']
+  styleUrls: ['./todolist-card.component.css'],
 })
 export class TodolistCardComponent implements OnInit {
+  todos: Todo[] = [];
 
-  todos: Todo[] = todos;
-  
-  constructor() { }
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
+    this.todoService.get().subscribe((todos) => {
+      this.todos = todos;
+    });
   }
 
   createTodo(todo: Todo) {
-    todos.push(todo)
+    return this.todoService.create(todo).subscribe((todo) => {
+      this.todos.push(todo);
+    });
   }
 
   deleteTodo(todo: Todo) {
-    return this.todos = this.todos.filter(td => td.id !== todo.id)
+    this.todoService.delete(todo).subscribe((todos) => {
+      return (this.todos = todos);
+    });
   }
 }
