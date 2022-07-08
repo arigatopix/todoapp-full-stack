@@ -37,8 +37,8 @@ export class TodoService {
     return this.http.post<TodoResponse>(`/api/todos`, td, httpOptions);
   }
 
-  delete(td: Todo): Observable<Todo[]> {
-    return of((this.todos = this.todos.filter((todo) => todo.id != td.id)));
+  delete(td: Todo): Observable<TodoResponse> {
+    return this.http.delete<TodoResponse>(`/api/todos/${td.id}`, httpOptions);
   }
 
   toggle(td: Todo): Observable<TodoResponse> {
