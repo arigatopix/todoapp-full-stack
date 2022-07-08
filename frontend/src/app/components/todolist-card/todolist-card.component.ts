@@ -13,8 +13,8 @@ export class TodolistCardComponent implements OnInit {
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.todoService.get().subscribe((todos) => {
-      this.todos = todos;
+    this.todoService.get().subscribe((res) => {
+      this.todos = res.data;
     });
   }
 
@@ -31,8 +31,7 @@ export class TodolistCardComponent implements OnInit {
   }
 
   toggle(todo: Todo) {
-    todo.compleated = !todo.compleated;
-
+    todo.completed = !todo.completed;
     this.todoService.toggle(todo).subscribe();
   }
 }
