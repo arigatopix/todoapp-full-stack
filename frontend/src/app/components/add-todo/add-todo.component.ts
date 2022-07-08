@@ -8,7 +8,7 @@ import { Todo } from '../../interfaces/Todo';
   styleUrls: ['./add-todo.component.css'],
 })
 export class AddTodoComponent implements OnInit {
-  @Output() addTodoHandler = new EventEmitter();
+  @Output() addTodoHandler: EventEmitter<Todo> = new EventEmitter();
 
   todoFormGroup = new FormGroup({
     id: new FormControl(),
@@ -23,7 +23,7 @@ export class AddTodoComponent implements OnInit {
     if (this.todoFormGroup.get('title')?.value) {
       this.addTodoHandler.emit({
         title: this.todoFormGroup.get('title')?.value,
-        completed: false,
+        compleated: true,
       });
 
       this.todoFormGroup.reset();
