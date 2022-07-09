@@ -54,8 +54,18 @@ export class AuthService {
 
   login(credentials : LoginCredentails) {
     return this.http.post<LoginResponse>('/api/auth/login', credentials, httpOptions).pipe(
+      tap((res) => {
+        if (res.message === 'ok') {
+          this.isAuth$.next(true)
+        }
+      })
+    )
+  }
+
+  logout() {
+    return this.http.post('/api/auth/logout', {}, httpOptions).pipe(
       tap(() => {
-        this.isAuth$.next(true)
+        this.isAuth$.next(false)
       })
     )
   }
