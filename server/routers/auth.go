@@ -37,7 +37,7 @@ func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
 	}
 
 	// set cookie for browser
-	appG.C.SetCookie("token", token, 60*60*5, "/", "", false, true)
+	appG.C.SetCookie("token", token, 60*60*5, "/", "", true, true)
 
 	resData := map[string]string{
 		"token": token,
@@ -146,14 +146,14 @@ func Login(ctx *gin.Context) {
 }
 
 // @desc    Logout
-// @route   GET /api/auth/logout
+// @route   POST /api/auth/logout
 // @access  Private
 // @Success 200
 // @Failure 400
 func Logout(ctx *gin.Context) {
 	appG := app.Gin{C: ctx}
 
-	appG.C.SetCookie("token", "", 0, "", "", false, true)
+	appG.C.SetCookie("token", "", 0, "", "", true, true)
 
 	appG.Response(http.StatusOK, e.SUCCESS, map[string]string{
 		"token": "",
