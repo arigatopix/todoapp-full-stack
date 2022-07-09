@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Response } from '../interfaces/Response';
 
@@ -7,8 +8,18 @@ interface LoginCredentails {
   email: string
 }
 
+interface GetMeResponse {
+  code: number
+  message: string
+  data: {
+    id: number
+    email: string
+  }
+}
+
 interface LoginResponse {
-  response : Response
+  code: number
+  message: string
   data: {
     email: string
     token: string
@@ -27,9 +38,25 @@ const httpOptions = {
 })
 export class AuthService {
 
+  isAuth$ = new BehaviorSubject(false)
+
   constructor(private http: HttpClient) { }
 
+  getMe() {
+    return this.http.get<GetMeResponse>('/api/auth/me', httpOptions).pipe(
+      tap((res) => {
+        if (res.message === 'ok') {
+          this.isAuth$.next(true)
+        }
+      })
+    )
+  }
+
   login(credentials : LoginCredentails) {
-    return this.http.post<LoginResponse>('/api/auth/login', credentials, httpOptions)
+    return this.http.post<LoginResponse>('/api/auth/login', credentials, httpOptions).pipe(
+      tap(() => {
+        this.isAuth$.next(true)
+      })
+    )
   }
 }
