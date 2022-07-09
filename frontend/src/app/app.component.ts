@@ -11,17 +11,16 @@ import { BehaviorSubject } from 'rxjs';
 
 export class AppComponent {
   email! : string;
-
-  signedid$: BehaviorSubject<boolean>;
+  signedin$: BehaviorSubject<boolean>;
 
   title = 'TodoApp';
 
   constructor(private authService: AuthService) {
-    this.signedid$ = this.authService.isAuth$;
+    this.signedin$ = this.authService.isAuth$;
   }
 
   ngOnInit(): void {
-    this.authService.getMe().subscribe((res) =>{
+    this.authService.getMe().subscribe((res) => {
       this.email = res.data.email
     })
   }

@@ -10,12 +10,12 @@
       >
 
       <div class="text-end">
-        <ng-container *ngIf="signedid | async">
+        <ng-container *ngIf="signedin | async">
           <span class="mx-3">Hi, {{email}}</span>
           <a routerLink="/logout" type="button" class="btn btn-outline-light me-2">Logout</a>
         </ng-container>
 
-        <ng-container *ngIf="!(signedid | async)">
+        <ng-container *ngIf="!(signedin | async)">
           <a routerLink="/login" type="button" class="btn btn-outline-light me-2">Login</a>
           <a routerLink="/register" ype="button" class="btn btn-warning">Sign Up</a>
         </ng-container>

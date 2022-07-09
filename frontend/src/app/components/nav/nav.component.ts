@@ -10,14 +10,12 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class NavComponent implements OnInit {
   @Input() email!: string;
-  @Input() signedid! : BehaviorSubject<boolean>
+  @Input() signedin!: BehaviorSubject<boolean>
 
-  constructor(private authService: AuthService) { 
-    
+  
+  constructor() { 
+   
   }
 
-  ngOnInit(): void {
-
-  }
-
+  ngOnInit(): void {}
 }

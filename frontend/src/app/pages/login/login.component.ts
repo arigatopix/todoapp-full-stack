@@ -2,7 +2,9 @@ import { compileNgModule } from '@angular/compiler';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Location } from '@angular/common';
+
 import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   @Input() message: string = ''
 
-  constructor(private authService: AuthService, private location: Location) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.loginFormGroup = new FormGroup({
@@ -33,7 +35,7 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(this.loginFormGroup.value).subscribe({
       next: ()=> {
-        this.location.back()
+        this.router.navigateByUrl("/todo")
       },
       error: (err) => {
         this.message = err.error.message

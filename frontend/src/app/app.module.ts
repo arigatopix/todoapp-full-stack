@@ -14,6 +14,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './pages/home/home.component';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HomeComponent } from './pages/home/home.component';
     RegisterComponent,
     AlertComponent,
     HomeComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
