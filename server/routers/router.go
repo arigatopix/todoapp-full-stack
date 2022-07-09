@@ -40,7 +40,7 @@ func InitRouter() *gin.Engine {
 	{
 		auth.POST("/register", Register)
 		auth.POST("/login", Login)
-		auth.GET("/logout", middlewares.Protect(), Logout)
+		auth.POST("/logout", middlewares.Protect(), Logout)
 		auth.GET("/me", middlewares.Protect(), GetMe)
 	}
 
