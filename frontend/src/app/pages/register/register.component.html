@@ -1,8 +1,11 @@
+<app-alert *ngIf="message" [message]="message"></app-alert>
+
 <div class="container w-75 mx-auto py-3 text-center">
   <h2 class="py-3">Sign Up</h2>
-  <form>
+
+  <form [formGroup]="registerFormGroup">
     <div class="form-floating mb-3">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" formControlName="email">
       <label for="floatingInput">Email address</label>
     </div>
     <!-- <div class="form-floating">
@@ -10,8 +13,9 @@
       <label for="floatingPassword">Password</label>
     </div> -->
     <div class="py-3 d-grid gap-2">
-      <button class="btn btn-primary btn-lg" type="button">Sign Up</button>
+      <button class="btn btn-primary btn-lg" (click)="onSignUp()">Sign Up</button>
     </div>
   </form>
+
   <p>Already have an account? <a routerLink="/login">Login</a></p> 
 </div>
