@@ -3,21 +3,34 @@
     <div
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
     >
-      <a routerLink="/"
+      <a
+        routerLink="/"
         class="navbar-brand nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
         href="#"
         >TodoApp</a
       >
 
       <div class="text-end">
-        <ng-container *ngIf="signedin | async">
-          <span class="mx-3">Hi, {{email}}</span>
-          <a routerLink="/logout" type="button" class="btn btn-outline-light me-2">Logout</a>
+        <ng-container *ngIf="signedin$ | async">
+          <span class="mx-3">Hi, {{ emailAuth$ | async }}</span>
+          <a
+            routerLink="/logout"
+            type="button"
+            class="btn btn-outline-light me-2"
+            >Logout</a
+          >
         </ng-container>
 
-        <ng-container *ngIf="!(signedin | async)">
-          <a routerLink="/login" type="button" class="btn btn-outline-light me-2">Login</a>
-          <a routerLink="/register" ype="button" class="btn btn-warning">Sign Up</a>
+        <ng-container *ngIf="!(signedin$ | async)">
+          <a
+            routerLink="/login"
+            type="button"
+            class="btn btn-outline-light me-2"
+            >Login</a
+          >
+          <a routerLink="/register" ype="button" class="btn btn-warning"
+            >Sign Up</a
+          >
         </ng-container>
       </div>
     </div>
