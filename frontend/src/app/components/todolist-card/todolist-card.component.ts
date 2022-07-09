@@ -15,8 +15,13 @@ export class TodolistCardComponent implements OnInit {
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.todoService.get().subscribe((res) => {
-      this.todos = res.data;
+    this.todoService.get().subscribe({
+      next: (res) => {
+        this.todos = res.data;
+      },
+      error: (err) => {
+        return this.message = err.error.message
+      }
     });
   }
 
@@ -29,9 +34,11 @@ export class TodolistCardComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     return this.todoService.delete(todo).subscribe({
-      next: (res) =>
+      next: () =>
         (this.todos = this.todos.filter((td) => td.id !== todo.id)),
-      error: (err) => (this.message = err.message),
+      error: (err) =>{
+        return this.message = err.message
+      },
     });
   }
 
