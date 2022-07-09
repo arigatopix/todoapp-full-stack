@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TodoService } from 'src/app/services/todo.service';
 import { Todo } from '../../interfaces/Todo';
 
@@ -10,9 +11,10 @@ import { Todo } from '../../interfaces/Todo';
 export class TodolistCardComponent implements OnInit {
   todos: Todo[] = [];
 
+
   message: string = '';
 
-  constructor(private todoService: TodoService) {}
+  constructor(private todoService: TodoService, private router: Router) {}
 
   ngOnInit(): void {
     this.todoService.get().subscribe({
@@ -20,6 +22,7 @@ export class TodolistCardComponent implements OnInit {
         this.todos = res.data;
       },
       error: (err) => {
+        this.router.navigateByUrl("login")
         return this.message = err.error.message
       }
     });
