@@ -28,6 +28,10 @@ services:
     build:
       dockerfile: Dockerfile.dev
       context: ./frontend
+    depends_on:
+      - postgresdb
+    environment:
+      - WDS_SOCKET_PORT=0
     volumes:
       - /app/node_modules
       - ./frontend:/app

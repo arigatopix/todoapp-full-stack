@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"time"
 )
 
 type Model struct {
@@ -25,6 +26,11 @@ func ConnectDB() *gorm.DB {
 	}
 
 	db.AutoMigrate(&Todo{}, &User{})
+
+	sqlDB, err := db.DB()
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetMaxIdleConns(100)
+	sqlDB.SetConnMaxLifetime(5 * time.Minute)
 
 	return db
 }
