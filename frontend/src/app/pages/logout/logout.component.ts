@@ -15,7 +15,7 @@ export class LogoutComponent implements OnInit {
     this.authService.logout().subscribe(()=> {
       setTimeout(() => {
         this.router.navigateByUrl("/")
-      }, 3000)
+      }, 1000)
     })
   }
 }
