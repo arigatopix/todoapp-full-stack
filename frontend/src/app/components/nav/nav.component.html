@@ -13,19 +13,13 @@
       <div class="text-end">
         <ng-container *ngIf="signedin$ | async">
           <span class="mx-3">Hi, {{ emailAuth$ | async }}</span>
-          <a
-            routerLink="/logout"
-            type="button"
-            class="btn btn-outline-light me-2"
+          <a routerLink="/logout" type="button" class="btn btn-light me-2"
             >Logout</a
           >
         </ng-container>
 
         <ng-container *ngIf="!(signedin$ | async)">
-          <a
-            routerLink="/login"
-            type="button"
-            class="btn btn-outline-light me-2"
+          <a routerLink="/login" type="button" class="btn btn-light me-2"
             >Login</a
           >
           <a routerLink="/register" ype="button" class="btn btn-warning"
