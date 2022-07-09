@@ -10,7 +10,7 @@ pipeline {
     nginxRegistry = "arigatopix/todoapp-nginx:latest"
 
     prodCredentials = "prod-credentials"
-    server = "ubuntu@ec2-18-141-24-224.ap-southeast-1.compute.amazonaws.com"
+    server = "ubuntu@ec2-52-221-196-17.ap-southeast-1.compute.amazonaws.com"
     DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred-arigatopix')
   }
 
