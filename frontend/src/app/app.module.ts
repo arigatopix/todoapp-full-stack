@@ -15,6 +15,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AlertComponent } from './components/alert/alert.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { LogoutComponent } from './pages/logout/logout.component';
     AlertComponent,
     HomeComponent,
     LogoutComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
