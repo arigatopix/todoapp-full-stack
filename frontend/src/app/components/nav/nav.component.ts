@@ -14,7 +14,6 @@ export class NavComponent implements OnInit {
   constructor(private authService: AuthService) {
     this.signedin$ = this.authService.isAuth$;
     this.emailAuth$ = this.authService.emailAuth$;
-    console.log(this.emailAuth$);
   }
 
   ngOnInit(): void {
