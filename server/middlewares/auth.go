@@ -65,7 +65,7 @@ func Protect() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("userId", strconv.Itoa(decoded.UserID))
+		ctx.Set("userId", strconv.Itoa(decoded.UserId))
 
 		ctx.Next()
 	}
