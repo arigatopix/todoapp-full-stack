@@ -5,11 +5,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 interface LoginCredentials {
   email: string;
+  password: string;
 }
 
 interface RegisterCredentials {
   email: string;
-  // password: string
+  password: string;
+  passwordConfirm: string;
 }
 
 interface GetMeResponse {
