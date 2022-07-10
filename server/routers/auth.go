@@ -2,6 +2,7 @@ package routers
 
 import (
 	"net/http"
+	"server/config"
 	"server/models"
 	"server/pkg/app"
 	"server/pkg/e"
@@ -14,8 +15,8 @@ import (
 )
 
 type UserRegisterForm struct {
-	Email string `form:"email" json:"email" binding:"required,email"`
-	Password string `form:"password" json:"password" binding:"required,min=3"`
+	Email           string `form:"email" json:"email" binding:"required,email"`
+	Password        string `form:"password" json:"password" binding:"required,min=3"`
 	PasswordConfirm string `form:"passwordConfirm" json:"passwordConfirm" binding:"required,eqfield=Password"`
 }
 
@@ -25,7 +26,7 @@ type ResponseUser struct {
 }
 
 type UserLogin struct {
-	Email string `form:"email" json:"email" binding:"required,email"`
+	Email    string `form:"email" json:"email" binding:"required,email"`
 	Password string `form:"password" json:"password" binding:"required,min=3"`
 }
 
@@ -38,8 +39,11 @@ func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
 		return
 	}
 
+	env := config.LoadENV()
+	cookieExpired, _ := strconv.Atoi(env.COOKIE_EXPIRE_IN)
+
 	// set cookie for browser
-	appG.C.SetCookie("token", token, 60*60*5, "/", "", false, true)
+	appG.C.SetCookie("token", token, 60*60*cookieExpired, "/", "", false, true)
 
 	resData := map[string]string{
 		"token": token,
@@ -78,10 +82,10 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
-	hashedPassword,_ := HashPassword(form.Password)
+	hashedPassword, _ := HashPassword(form.Password)
 
 	authService := services.User{
-		Email: form.Email,
+		Email:    form.Email,
 		Password: hashedPassword,
 	}
 
@@ -147,7 +151,7 @@ func Login(ctx *gin.Context) {
 	}
 
 	authService := services.User{
-		Email: form.Email,
+		Email:    form.Email,
 		Password: form.Password,
 	}
 

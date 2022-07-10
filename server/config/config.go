@@ -16,6 +16,7 @@ type env struct {
 	POSTGRES_PORT     string
 	JWT_SECRET        string
 	JWT_EXPIRE_IN     string
+	COOKIE_EXPIRE_IN  string
 }
 
 func LoadENV() env {
@@ -37,6 +38,7 @@ func LoadENV() env {
 		POSTGRES_PORT:     os.Getenv("POSTGRES_PORT"),
 		JWT_SECRET:        os.Getenv("JWT_SECRET"),
 		JWT_EXPIRE_IN:     os.Getenv("JWT_EXPIRE_IN"),
+		COOKIE_EXPIRE_IN:  os.Getenv("COOKIE_EXPIRE_IN"),
 	}
 
 	return loadedEnv
