@@ -11,3 +11,7 @@ type User struct {
 func (u *User) ExistByEmail() (bool, error) {
 	return models.ExistEmail(u.Email)
 }
+
+func (u *User) UserExisted() (bool, error) {
+	return models.ExistUser(u.ID)
+}
