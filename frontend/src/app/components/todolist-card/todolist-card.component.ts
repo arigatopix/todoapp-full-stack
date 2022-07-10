@@ -11,7 +11,6 @@ import { Todo } from '../../interfaces/Todo';
 export class TodolistCardComponent implements OnInit {
   todos: Todo[] = [];
 
-
   message: string = '';
 
   constructor(private todoService: TodoService, private router: Router) {}
@@ -22,9 +21,9 @@ export class TodolistCardComponent implements OnInit {
         this.todos = res.data;
       },
       error: (err) => {
-        this.router.navigateByUrl("login")
-        return this.message = err.error.message
-      }
+        // this.router.navigateByUrl("login")
+        return (this.message = err.error.message);
+      },
     });
   }
 
@@ -37,10 +36,9 @@ export class TodolistCardComponent implements OnInit {
 
   deleteTodo(todo: Todo) {
     return this.todoService.delete(todo).subscribe({
-      next: () =>
-        (this.todos = this.todos.filter((td) => td.id !== todo.id)),
-      error: (err) =>{
-        return this.message = err.message
+      next: () => (this.todos = this.todos.filter((td) => td.id !== todo.id)),
+      error: (err) => {
+        return (this.message = err.message);
       },
     });
   }

@@ -1,11 +1,25 @@
 <div class="container mx-auto d-flex flex-column align-items-center">
-<div class="jumbotron vertical-center text-center">
-  <h1 class="display-4">Hello And Welcome✌️</h1>
+  <div class="jumbotron vertical-center text-center">
+    <h1 class="display-4">Hello And Welcome✌️</h1>
 
-  <hr class="my-2">
-  <p>หวังว่าจะสนุกกับ TodoApp 😁</p>
-  <p class="lead">
-    <a class="btn btn-warning btn-lg" routerLink="/todo" role="button">Enjoy</a>
-  </p>
-</div>
+    <hr class="my-2" />
+    <p>หวังว่าจะสนุกกับ TodoApp 😁</p>
+    <p class="lead">
+      <a
+        *ngIf="signedin$ | async"
+        class="btn btn-warning btn-lg"
+        routerLink="/todo"
+        role="button"
+        >Enjoy</a
+      >
+
+      <a
+        *ngIf="!(signedin$ | async)"
+        class="btn btn-warning btn-lg"
+        routerLink="/login"
+        role="button"
+        >Enjoy</a
+      >
+    </p>
+  </div>
 </div>
