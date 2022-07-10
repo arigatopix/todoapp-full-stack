@@ -39,3 +39,4 @@ func (u *User) Login() (*models.User, error) {
 
 	return user, nil
 }
+

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"server/pkg/e"
 	"server/pkg/utils"
+	"server/services"
 	"strconv"
 	"strings"
 
@@ -41,6 +42,16 @@ func Protect() gin.HandlerFunc {
 			default:
 				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 			}
+		}
+
+		authService := services.User{
+			ID: decoded.UserId,
+		}
+
+		existed, err := authService.UserExisted()
+
+		if !existed || err != nil {
+			code = e.ERROR_USER_NOT_EXIST
 		}
 
 		if code != e.SUCCESS {

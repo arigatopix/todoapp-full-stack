@@ -24,6 +24,22 @@ func ExistEmail(email string) (bool, error) {
 
 	return false, nil
 }
+func ExistUser(id int) (bool, error) {
+	db := ConnectDB()
+
+	var user User
+
+	// หา email
+	if err := db.First(&user, id).Error; err != nil {
+		return false, err
+	}
+
+	if user.ID > 0 {
+		return true, nil
+	}
+
+	return false, nil
+}
 
 func AddUser(data map[string]interface{}) (*User, error) {
 	db := ConnectDB()
