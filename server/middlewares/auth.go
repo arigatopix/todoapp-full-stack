@@ -45,7 +45,7 @@ func Protect() gin.HandlerFunc {
 		}
 
 		authService := services.User{
-			ID: decoded.UserID,
+			ID: decoded.UserId,
 		}
 
 		existed, err := authService.UserExisted()
@@ -65,7 +65,7 @@ func Protect() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("userId", strconv.Itoa(decoded.UserID))
+		ctx.Set("userId", strconv.Itoa(decoded.UserId))
 
 		ctx.Next()
 	}
