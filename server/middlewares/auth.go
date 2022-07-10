@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"server/pkg/e"
 	"server/pkg/utils"
+	"server/services"
 	"strconv"
 	"strings"
 
@@ -43,6 +44,16 @@ func Protect() gin.HandlerFunc {
 			}
 		}
 
+		authService := services.User{
+			ID: decoded.UserID,
+		}
+
+		existed, err := authService.UserExisted()
+
+		if !existed || err != nil {
+			code = e.ERROR_USER_NOT_EXIST
+		}
+
 		if code != e.SUCCESS {
 			ctx.JSON(http.StatusUnauthorized, gin.H{
 				"code":    code,
@@ -54,7 +65,7 @@ func Protect() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("userId", strconv.Itoa(decoded.UserId))
+		ctx.Set("userId", strconv.Itoa(decoded.UserID))
 
 		ctx.Next()
 	}
