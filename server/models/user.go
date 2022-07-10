@@ -5,6 +5,7 @@ import "gorm.io/gorm"
 type User struct {
 	Model
 	Email string `gorm:"index:unique" json:"email"`
+	Password string `json:"password"`
 }
 
 func ExistEmail(email string) (bool, error) {
@@ -29,6 +30,7 @@ func AddUser(data map[string]interface{}) (*User, error) {
 
 	user := User{
 		Email: data["email"].(string),
+		Password: data["password"].(string),
 	}
 
 	if err := db.Create(&user).Error; err != nil {

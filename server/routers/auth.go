@@ -10,11 +10,13 @@ import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserRegisterForm struct {
 	Email string `form:"email" json:"email" binding:"required,email"`
-	// TODO password string `form:"password" json:"password" binding:"required,min=3"`
+	Password string `form:"password" json:"password" binding:"required,min=3"`
+	PasswordConfirm string `form:"passwordConfirm" json:"passwordConfirm" binding:"required,eqfield=Password"`
 }
 
 type ResponseUser struct {
@@ -24,7 +26,7 @@ type ResponseUser struct {
 
 type UserLogin struct {
 	Email string `form:"email" json:"email" binding:"required,email"`
-	// TODO password string `form:"password" json:"password" binding:"required,min=3"`
+	Password string `form:"password" json:"password" binding:"required,min=3"`
 }
 
 func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
@@ -47,6 +49,16 @@ func sendTokenResponse(httpCode int, user *models.User, appG app.Gin) {
 	appG.Response(httpCode, e.SUCCESS, resData)
 }
 
+func HashPassword(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
+	return string(bytes), err
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
+}
+
 // @desc    Register new user
 // @route   POST /api/auth/register
 // @payload {email, password}
@@ -66,8 +78,11 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
+	hashedPassword,_ := HashPassword(form.Password)
+
 	authService := services.User{
 		Email: form.Email,
+		Password: hashedPassword,
 	}
 
 	isExist, _ := authService.ExistByEmail()
@@ -133,12 +148,24 @@ func Login(ctx *gin.Context) {
 
 	authService := services.User{
 		Email: form.Email,
+		Password: form.Password,
 	}
 
 	user, err := authService.Login()
 
 	if err != nil {
 		appG.Response(http.StatusBadRequest, e.ERROR_USER_NOT_EXIST, nil)
+		return
+	}
+
+	// Check password
+	// 1) Retrieve user from database
+
+	// 2) Compare password from db and hash
+	match := CheckPasswordHash(form.Password, user.Password)
+
+	if !match {
+		appG.Response(http.StatusBadRequest, e.ERROR_WRONG_PASSWORD, nil)
 		return
 	}
 
