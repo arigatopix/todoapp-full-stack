@@ -20,6 +20,14 @@ export class RegisterComponent implements OnInit {
       email: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)
+      ]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
+      ]),
+      passwordConfirm: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
       ])
     })
   }
@@ -28,6 +36,14 @@ export class RegisterComponent implements OnInit {
     if (this.registerFormGroup.invalid) {
       this.message = "Please enter your email"
       return;
+    }
+
+    const password = this.registerFormGroup.get('password')?.value;
+    const passwordConfirm = this.registerFormGroup.get('passwordConfirm')?.value;
+
+    if (password !== passwordConfirm) {
+      this.message = "Password not match"
+      return
     }
 
     this.authService.register(this.registerFormGroup.value).subscribe({

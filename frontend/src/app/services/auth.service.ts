@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Response } from '../interfaces/Response';
 
 interface LoginCredentials {
   email: string;
+  password: string;
 }
 
 interface RegisterCredentials {
   email: string;
-  // password: string
+  password: string;
+  passwordConfirm: string;
 }
 
 interface GetMeResponse {
@@ -51,7 +52,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class AuthService {
-  isAuth$ = new BehaviorSubject(false);
+  isAuth$ = new BehaviorSubject<boolean>(null || false);
   emailAuth$ = new BehaviorSubject('');
 
   constructor(private http: HttpClient) {}
@@ -59,7 +60,7 @@ export class AuthService {
   getMe() {
     return this.http.get<GetMeResponse>('/api/auth/me', httpOptions).pipe(
       tap((res) => {
-        if (res.message === 'ok') {
+        if (res.code === 200) {
           this.isAuth$.next(true);
           this.emailAuth$.next(res.data.email);
         }
@@ -76,7 +77,7 @@ export class AuthService {
       })
       .pipe(
         tap((res) => {
-          if (res.message === 'ok') {
+          if (res.code === 200) {
             this.isAuth$.next(true);
             this.emailAuth$.next(res.data.email);
           }
@@ -93,7 +94,7 @@ export class AuthService {
       })
       .pipe(
         tap((res) => {
-          if (res.message === 'ok') {
+          if (res.code === 200) {
             this.isAuth$.next(true);
             this.emailAuth$.next(res.data.email);
           }
