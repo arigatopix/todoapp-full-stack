@@ -16,7 +16,7 @@ func (u *User) Get(id int) (*models.User, error) {
 
 func (u *User) Add() (*models.User, error) {
 	User := map[string]interface{}{
-		"email": u.Email,
+		"email":    u.Email,
 		"password": u.Password,
 	}
 
