@@ -27,6 +27,15 @@ func Protect() gin.HandlerFunc {
 			token = strings.TrimPrefix(s, "Bearer ")
 		} else if cookie != "" {
 			token = cookie
+		} else {
+			ctx.JSON(http.StatusUnauthorized, gin.H{
+				"code":    e.ERROR_UNAUTHORIZED,
+				"message": e.GetMessage(e.ERROR_UNAUTHORIZED),
+				"data":    nil,
+			})
+
+			ctx.Abort()
+			return
 		}
 
 		if token == "" {
