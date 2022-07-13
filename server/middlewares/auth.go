@@ -51,6 +51,15 @@ func Protect() gin.HandlerFunc {
 			default:
 				code = e.ERROR_AUTH_CHECK_TOKEN_FAIL
 			}
+
+			ctx.JSON(http.StatusUnauthorized, gin.H{
+				"code":    code,
+				"message": e.GetMessage(code),
+				"data":    nil,
+			})
+
+			ctx.Abort()
+			return
 		}
 
 		authService := services.User{
